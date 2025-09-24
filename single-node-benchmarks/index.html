@@ -1463,18 +1463,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#benchmark-settings" class="md-nav__link">
+  <a href="#test-data" class="md-nav__link">
     <span class="md-ellipsis">
-      Benchmark settings
+      Test Data
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#geopandas-query-methodology" class="md-nav__link">
+  <a href="#software" class="md-nav__link">
     <span class="md-ellipsis">
-      GeoPandas query methodology
+      Software
     </span>
   </a>
   
@@ -1491,27 +1491,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#spatial-filters-q1q3-q6" class="md-nav__link">
+  <a href="#spatial-filters-and-basic-operations-q1q6" class="md-nav__link">
     <span class="md-ellipsis">
-      Spatial filters (Q1–Q3, Q6)
+      Spatial filters and basic operations (Q1–Q6)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#aggregation-with-spatial-joins-q4-q10-q11" class="md-nav__link">
+  <a href="#geometric-computations-q7q9" class="md-nav__link">
     <span class="md-ellipsis">
-      Aggregation with spatial joins (Q4, Q10, Q11)
+      Geometric computations (Q7–Q9)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#geometric-computations-q5-q7-q9" class="md-nav__link">
+  <a href="#complex-spatial-joins-and-aggregations-q10q11" class="md-nav__link">
     <span class="md-ellipsis">
-      Geometric computations (Q5, Q7, Q9)
+      Complex spatial joins and aggregations (Q10–Q11)
     </span>
   </a>
   
@@ -1544,6 +1544,15 @@
   <a href="#benchmark-code" class="md-nav__link">
     <span class="md-ellipsis">
       Benchmark code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-benchmark-performance-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw Benchmark Performance Numbers
     </span>
   </a>
   
@@ -1753,18 +1762,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#benchmark-settings" class="md-nav__link">
+  <a href="#test-data" class="md-nav__link">
     <span class="md-ellipsis">
-      Benchmark settings
+      Test Data
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#geopandas-query-methodology" class="md-nav__link">
+  <a href="#software" class="md-nav__link">
     <span class="md-ellipsis">
-      GeoPandas query methodology
+      Software
     </span>
   </a>
   
@@ -1781,27 +1790,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#spatial-filters-q1q3-q6" class="md-nav__link">
+  <a href="#spatial-filters-and-basic-operations-q1q6" class="md-nav__link">
     <span class="md-ellipsis">
-      Spatial filters (Q1–Q3, Q6)
+      Spatial filters and basic operations (Q1–Q6)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#aggregation-with-spatial-joins-q4-q10-q11" class="md-nav__link">
+  <a href="#geometric-computations-q7q9" class="md-nav__link">
     <span class="md-ellipsis">
-      Aggregation with spatial joins (Q4, Q10, Q11)
+      Geometric computations (Q7–Q9)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#geometric-computations-q5-q7-q9" class="md-nav__link">
+  <a href="#complex-spatial-joins-and-aggregations-q10q11" class="md-nav__link">
     <span class="md-ellipsis">
-      Geometric computations (Q5, Q7, Q9)
+      Complex spatial joins and aggregations (Q10–Q11)
     </span>
   </a>
   
@@ -1834,6 +1843,15 @@
   <a href="#benchmark-code" class="md-nav__link">
     <span class="md-ellipsis">
       Benchmark code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-benchmark-performance-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw Benchmark Performance Numbers
     </span>
   </a>
   
@@ -1889,51 +1907,250 @@
   KIND, either express or implied.  See the License for the
   specific language governing permissions and limitations
   under the License.
---><p>This page presents the SpatialBench single-node benchmark results for SedonaDB, DuckDB, and GeoPandas. The benchmark was conducted on September 22, 2025, using SpatialBench v0.1.0 pre-release (commit 9094be8 on the main branch).</p>
-<p>Here are the results for v0.1 of the SpatialBench queries for scale factor 1 (SF1) and scale factor 10 (SF10):</p>
+--><p>This page presents the SpatialBench single-node benchmark results for SedonaDB, DuckDB, and GeoPandas. The benchmark was conducted on September 22, 2025, using SpatialBench v0.1.0 pre-release (commit <code>9094be8</code> on the main branch).</p>
+<p>Here are the results from SpatialBench v0.1 for Queries 1–12 at scale factor 1 (SF1) and scale factor 10 (SF10).</p>
 <p class="grid"><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../image/sf1.png" data-desc-position="bottom"><img alt="Scale Factor 1 benchmark results" src="../image/sf1.png" width="400"></a>
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../image/sf10.png" data-desc-position="bottom"><img alt="Scale Factor 10 benchmark results" src="../image/sf10.png" width="400"></a></p>
-<p>The remainder of this document summarizes the hardware and software versions, query methodologies for specific engines, and provides information on where to find the benchmark code.</p>
 <h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">¶</a></h2>
-<p>This benchmark was run on an AWS EC2 m7i.2xlarge instance, which has 8 CPUs and 32 GB of RAM. We encourage you to try running SpatialBench on different hardware configurations and share your results with the community.</p>
-<h2 id="benchmark-settings">Benchmark settings<a class="headerlink" href="#benchmark-settings" title="Permanent link">¶</a></h2>
-<p>Here are the software versions used in this benchmark:</p>
+<p>This benchmark was run on an AWS EC2 <code>m7i.2xlarge</code> instance, which has 8 CPUs and 32 GB of RAM. We encourage you to try running SpatialBench on different hardware configurations and share your results with the community.</p>
+<h2 id="test-data">Test Data<a class="headerlink" href="#test-data" title="Permanent link">¶</a></h2>
+<p>The datasets are generated using SpatialBench’s dbgen and stored in an AWS S3 bucket in pure Parquet format. Geometry columns are encoded in Well-Known Binary (WKB) using the Parquet BINARY type. All systems read Parquet files directly from the S3 bucket. No local pre-loading is involved. Each Parquet row group is 128 MB. To better reflect real-world scenarios, large Parquet files are split into smaller ones, each around 200–300 MB in size.</p>
+<p>We provide public datasets for Scale Factor 1 and 10 in the <code>us-west-2</code> region. You can access them here:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Scale Factor = 1</label><label for="__tabbed_1_2">Scale Factor = 10</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>s3://wherobots-examples/data/spatialbench/SpatialBench_sf1/building/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf1/customer/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf1/driver/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf1/trip/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf1/vehicle/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf1/zone/
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>s3://wherobots-examples/data/spatialbench/SpatialBench_sf10/building/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf10/customer/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf10/driver/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf10/trip/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf10/vehicle/
+s3://wherobots-examples/data/spatialbench/SpatialBench_sf10/zone/
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="software">Software<a class="headerlink" href="#software" title="Permanent link">¶</a></h2>
+<p>The following software versions were used in this benchmark:</p>
 <ul>
 <li>GeoPandas: 1.1.1</li>
 <li>Shapely: 2.1.1</li>
 <li>NumPy: 2.3.3</li>
 <li>DuckDB: 1.4.0</li>
-<li>SedonaDB: 0.1</li>
+<li>SedonaDB: 0.1.0</li>
 </ul>
-<p>This benchmark report lists software versions, so it's easy to track how engine performance improves over time.  We use the default settings of all software unless otherwise noted. For DuckDB, we explicitly set enable_external_file_cache to false to focus on the cold start queries runtime, consistent with the other engines.</p>
-<p>The code execution runtime includes the entire query runtime for all engines. The query timeout is set to 1200 seconds.</p>
-<h2 id="geopandas-query-methodology">GeoPandas query methodology<a class="headerlink" href="#geopandas-query-methodology" title="Permanent link">¶</a></h2>
-<p>The GeoPandas queries are written in Python, since GeoPandas does not support SQL. GeoPandas executes queries by loading data fully into memory and then processing it directly.</p>
-<p>Since GeoPandas runs in a single thread and lacks a query optimizer, any parallelization or optimization must be implemented manually. This benchmark implemented a straightforward implementation that mirrors the SQL queries used for other engines. If you're a GeoPandas expert, we'd be glad to collaborate on a more optimized and/or parallelized version.</p>
+<p>This benchmark report specifies software versions to make it easier to track performance improvements over time. We use the default settings of all software unless otherwise noted. For DuckDB, we explicitly set <code>enable_external_file_cache</code> to <code>false</code> to focus on the cold start queries runtime, consistent with the other engines.</p>
+<p>The reported runtimes include the entire query execution for each engine, including data loading. We used <code>COUNT</code> on every query result to trigger full execution, but did not write outputs to external files in order to avoid introducing additional overhead from data writing. A query timeout of <code>1200</code> seconds was applied.</p>
+<p>Since GeoPandas executes in a single thread and lacks a query optimizer, any parallelization or optimization must be implemented manually. For this benchmark, we did a straightforward Python implementation that mirrors the SQL queries run on other engines. If you are a GeoPandas expert, we would be happy to collaborate on a more optimized or parallelized version.</p>
 <h2 id="result-analysis">Result analysis<a class="headerlink" href="#result-analysis" title="Permanent link">¶</a></h2>
-<h3 id="spatial-filters-q1q3-q6">Spatial filters (Q1–Q3, Q6)<a class="headerlink" href="#spatial-filters-q1q3-q6" title="Permanent link">¶</a></h3>
-<p>DuckDB and SedonaDB achieve similar low-latency performance at both SF 1 and SF 10, while GeoPandas struggles to keep up at larger scales. The main reasons are the lack of a query optimizer to choose efficient execution strategies and the absence of multi-core parallelism. By contrast, DuckDB and SedonaDB leverage columnar data layouts, vectorized execution, multi-core parallelism, and query optimization to achieve strong performance.</p>
-<h3 id="aggregation-with-spatial-joins-q4-q10-q11">Aggregation with spatial joins (Q4, Q10, Q11)<a class="headerlink" href="#aggregation-with-spatial-joins-q4-q10-q11" title="Permanent link">¶</a></h3>
+<h3 id="spatial-filters-and-basic-operations-q1q6">Spatial filters and basic operations (Q1–Q6)<a class="headerlink" href="#spatial-filters-and-basic-operations-q1q6" title="Permanent link">¶</a></h3>
+<p>DuckDB and SedonaDB achieve similar low-latency performance at both SF 1 and SF 10, while GeoPandas struggles to keep up at larger scales. The main reasons are the lack of a query optimizer to choose efficient execution strategies and the absence of multi-core parallelism. By contrast, DuckDB and SedonaDB leverage columnar data layouts, vectorized execution, multi-core parallelism, and query optimization to achieve strong performance. However, SedonaDB faces challenges with spatial aggregation (Q5), where DuckDB performs significantly better. This is a known issue in SedonaDB and is planned for improvement.</p>
+<h3 id="geometric-computations-q7q9">Geometric computations (Q7–Q9)<a class="headerlink" href="#geometric-computations-q7q9" title="Permanent link">¶</a></h3>
+<p>SedonaDB is especially effective on intersection/IoU (Q9), showing substantial efficiency improvements. These queries focus on geometric operations like area calculations, distance computations, and spatial intersections.</p>
+<h3 id="complex-spatial-joins-and-aggregations-q10q11">Complex spatial joins and aggregations (Q10–Q11)<a class="headerlink" href="#complex-spatial-joins-and-aggregations-q10q11" title="Permanent link">¶</a></h3>
 <p>SedonaDB consistently delivers strong results on heavier joins, particularly Q10 and Q11, aided by its adaptive spatial join strategy that picks the best algorithm per partition based on spatial statistics. DuckDB handles some join queries well but encounters scaling issues in certain cases, while GeoPandas completes SF 1 but not SF 10.</p>
-<h3 id="geometric-computations-q5-q7-q9">Geometric computations (Q5, Q7, Q9)<a class="headerlink" href="#geometric-computations-q5-q7-q9" title="Permanent link">¶</a></h3>
-<p>SedonaDB is especially effective on intersection/IoU (Q9), showing substantial efficiency improvements, while Q5 (convex hull aggregation) highlights areas where DuckDB currently performs faster. SedonaDB's overhead in geometry copying in spatial aggregation is a known bottleneck and is planned for improvement.</p>
 <h3 id="nearest-neighbor-joins-q12">Nearest-neighbor joins (Q12)<a class="headerlink" href="#nearest-neighbor-joins-q12" title="Permanent link">¶</a></h3>
 <p>SedonaDB completes KNN joins at both SF 1 and SF 10, thanks to its native operator and optimized algorithm. In contrast, DuckDB and GeoPandas currently lack built-in KNN join support. For these engines, we had to implement additional code manually, which proved less efficient. Adding native KNN capabilities in the future would likely help both engines close this gap.</p>
 <h3 id="overall">Overall<a class="headerlink" href="#overall" title="Permanent link">¶</a></h3>
-<p>SedonaDB demonstrates balanced strengths across all categories and successfully scales to SF 10 on an AWS m7i.2xlarge instance. DuckDB delivers solid performance on simpler filters and certain geometric computations, but has room to improve on complex joins and KNN queries. GeoPandas, while not scaling as effectively in this benchmark, remains a widely used tool in the Python ecosystem; however, it currently requires manual optimization and parallelization to be deployed at scale.</p>
+<p>SedonaDB demonstrates balanced performance across all query types and scales effectively to SF 10. DuckDB excels at spatial filters and some geometric operations but faces challenges with complex joins and KNN queries. GeoPandas, while popular in the Python ecosystem, requires manual optimization and parallelization to handle larger datasets effectively.</p>
 <h2 id="benchmark-code">Benchmark code<a class="headerlink" href="#benchmark-code" title="Permanent link">¶</a></h2>
 <p>You can access and run the benchmark code in the <a href="https://github.com/apache/sedona-spatialbench">sedona-spatialbench GitHub</a> repository.</p>
-<p>It's easy to generate the datasets locally or in the cloud.  You can also run the benchmarks locally or in the cloud.</p>
+<p>You can generate datasets and run benchmarks both locally and in cloud environments.</p>
 <p>The repository has an issue tracker where you can file bug reports or suggest code improvements.</p>
+<h2 id="raw-benchmark-performance-numbers">Raw Benchmark Performance Numbers<a class="headerlink" href="#raw-benchmark-performance-numbers" title="Permanent link">¶</a></h2>
+<p>The following tables present the recorded benchmark results in full detail.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Scale Factor = 1</label><label for="__tabbed_2_2">Scale Factor = 10</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Query</th>
+<th>SedonaDB</th>
+<th>DuckDB</th>
+<th>GeoPandas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>q1</td>
+<td>0.66</td>
+<td>0.96</td>
+<td>12.78</td>
+</tr>
+<tr>
+<td>q2</td>
+<td>8.07</td>
+<td>9.95</td>
+<td>20.74</td>
+</tr>
+<tr>
+<td>q3</td>
+<td>0.80</td>
+<td>1.17</td>
+<td>13.59</td>
+</tr>
+<tr>
+<td>q4</td>
+<td>8.41</td>
+<td>9.83</td>
+<td>25.24</td>
+</tr>
+<tr>
+<td>q5</td>
+<td>5.10</td>
+<td>1.80</td>
+<td>47.08</td>
+</tr>
+<tr>
+<td>q6</td>
+<td>8.59</td>
+<td>9.36</td>
+<td>24.43</td>
+</tr>
+<tr>
+<td>q7</td>
+<td>1.66</td>
+<td>1.82</td>
+<td>137.00</td>
+</tr>
+<tr>
+<td>q8</td>
+<td>1.10</td>
+<td>1.08</td>
+<td>16.08</td>
+</tr>
+<tr>
+<td>q9</td>
+<td>0.23</td>
+<td>50.15</td>
+<td>0.28</td>
+</tr>
+<tr>
+<td>q10</td>
+<td>18.79</td>
+<td>207.84</td>
+<td>46.13</td>
+</tr>
+<tr>
+<td>q11</td>
+<td>32.98</td>
+<td>TIMEOUT</td>
+<td>51.01</td>
+</tr>
+<tr>
+<td>q12</td>
+<td>14.55</td>
+<td>ERROR</td>
+<td>TIMEOUT</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Query</th>
+<th>SedonaDB</th>
+<th>DuckDB</th>
+<th>GeoPandas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>q1</td>
+<td>3.04</td>
+<td>4.58</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q2</td>
+<td>8.89</td>
+<td>8.26</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q3</td>
+<td>4.09</td>
+<td>5.17</td>
+<td>TIMEOUT</td>
+</tr>
+<tr>
+<td>q4</td>
+<td>7.52</td>
+<td>8.51</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q5</td>
+<td>50.81</td>
+<td>14.40</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q6</td>
+<td>9.11</td>
+<td>10.67</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q7</td>
+<td>14.44</td>
+<td>14.03</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q8</td>
+<td>7.24</td>
+<td>7.57</td>
+<td>TIMEOUT</td>
+</tr>
+<tr>
+<td>q9</td>
+<td>0.38</td>
+<td>942.98</td>
+<td>0.49</td>
+</tr>
+<tr>
+<td>q10</td>
+<td>42.02</td>
+<td>ERROR</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q11</td>
+<td>97.52</td>
+<td>ERROR</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>q12</td>
+<td>145.66</td>
+<td>ERROR</td>
+<td>TIMEOUT</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 <h2 id="future-work">Future work<a class="headerlink" href="#future-work" title="Permanent link">¶</a></h2>
-<p>It would be great to include other engines and databases in the future:</p>
+<p>We plan to include additional engines and databases in future work, such as:</p>
 <ul>
 <li><code>dask-geopandas</code> for single-node parallelism across cores</li>
 <li>An R geospatial engine</li>
 </ul>
 <p>If you're an expert in any of these technologies, we welcome you to take on this project or reach out to us about collaborating.</p>
-<p>Note that compute engines designed for multi-node environments are intentionally excluded from these single-node results for clarity and simplicity.</p>
-<p>Similarly, transactional databases such as PostGIS execute queries in fundamentally different ways than pure Python engines, like GeoPandas, or analytical engines, like SedonaDB and DuckDB. Since SpatialBench is primarily focused on analytical workloads, these systems are not yet included in this discussion.</p>
+<p>For clarity and simplicity, compute engines designed for multi-node environments are intentionally excluded from these single-node results. Likewise, transactional databases such as PostGIS execute queries in fundamentally different ways from pure Python engines (e.g., GeoPandas) or analytical engines (e.g., SedonaDB, DuckDB). Since SpatialBench is primarily focused on analytical workloads, these systems are not included in the current study.</p>
 <p>The overarching goal of the SpatialBench initiative is to provide the spatial community with a reliable set of benchmarks and to help accelerate the development of better tooling for users.</p>
 
 
@@ -1955,7 +2172,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="September 24, 2025 04:38:44 UTC">September 24, 2025 04:38:44</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="September 24, 2025 05:43:11 UTC">September 24, 2025 05:43:11</span>
   </span>
 
     
