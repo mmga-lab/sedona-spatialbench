@@ -498,9 +498,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-advantages" class="md-nav__link">
+  <a href="#key-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Key advantages
+      Key Features
     </span>
   </a>
   
@@ -1693,9 +1693,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-advantages" class="md-nav__link">
+  <a href="#key-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Key advantages
+      Key Features
     </span>
   </a>
   
@@ -1769,39 +1769,42 @@
   KIND, either express or implied.  See the License for the
   specific language governing permissions and limitations
   under the License.
---><p>SpatialBench is a benchmark for assessing geospatial SQL analytics query performance across database systems.</p>
-<p>SpatialBench makes it easy to run spatial benchmarks on a realistic dataset with any query engine.</p>
-<p>The methodology is unbiased and the benchmarks in any environment to compare relative performance between runtimes.</p>
+--><p>SpatialBench is a benchmark for assessing geospatial SQL analytics query performance across database systems, making it easy to run tests on a realistic dataset with any query engine.</p>
+<p>The methodology is unbiased, allowing you to run the benchmarks in any environment to compare the relative performance between runtimes.</p>
 <h2 id="why-spatialbench">Why SpatialBench<a class="headerlink" href="#why-spatialbench" title="Permanent link">¶</a></h2>
-<p>SpatialBench is a geospatial benchmark for testing and optimizing spatial analytical query performance in database systems. Inspired by the SSB and NYC taxi data, it combines realistic urban mobility scenarios with a star schema extended with spatial attributes like pickup/dropoff points, zones, and building footprints.</p>
+<p>SpatialBench was created because standard database benchmarks don't adequately test the unique demands of geospatial queries. SpatialBench provides an open-source, standardized, and scalable framework designed specifically for geospatial analytics.</p>
+<p>Inspired by the Star Schema Benchmark (SSB) and NYC taxi data, SpatialBench combines realistic urban mobility scenarios
+with a star schema extended with spatial attributes like pickup/dropoff points, zones, and building footprints.</p>
 <p>This design enables evaluation of the following geospatial operations:</p>
 <ul>
-<li>spatial joins</li>
-<li>distance queries</li>
-<li>aggregations</li>
-<li>point-in-polygon analysis</li>
+<li>Spatial joins</li>
+<li>Distance queries</li>
+<li>Aggregations</li>
+<li>Point-in-polygon analysis</li>
 </ul>
-<p>Let’s dive into the advantages of SpatialBench.</p>
-<h2 id="key-advantages">Key advantages<a class="headerlink" href="#key-advantages" title="Permanent link">¶</a></h2>
+<p>Let's dive into the advantages of SpatialBench.</p>
+<h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">¶</a></h2>
+<p>To ensure fair and comprehensive testing, SpatialBench provides the following advantages:</p>
 <ul>
-<li>Uses spatial datasets with geometry columns.</li>
-<li>Includes queries with different spatial predicates.</li>
-<li>Easily reproducible results.</li>
-<li>Includes a dataset generator to so results are reproducible.</li>
-<li>The scale factors of the datasets can be changed so that you can run the queries locally, in a data warehouse, or on a large cluster in the cloud.</li>
-<li>All the specifications used to run the benchmarks are documented, and the methodology is unbiased.</li>
-<li>The code is open source, allowing the community to provide feedback and keep the benchmarks up-to-date and reliable over time.</li>
+<li>Features realistic spatial datasets with native geometry columns.</li>
+<li>Includes a suite of queries that test various operations such as spatial predicates and joins.</li>
+<li>Provides a built-in synthetic data generator for creating consistent test data.</li>
+<li>Offers a configurable scale factor to benchmark performance across various
+  environments, from a single local machine to a large-scale cloud cluster.</li>
+<li>Ensures consistent and reproducible benchmark results across all environments.</li>
+<li>Utilizes a fully documented and unbiased methodology to facilitate fair comparisons.</li>
+<li>Open-source and community-driven to foster transparency and continuous improvement.</li>
 </ul>
 <h2 id="generate-synthetic-data">Generate synthetic data<a class="headerlink" href="#generate-synthetic-data" title="Permanent link">¶</a></h2>
-<p>Here’s how you can install the synthetic data generator:</p>
+<p>Here's how you can install the synthetic data generator:</p>
 <div class="highlight"><pre><span></span><code>cargo install --path ./spatialbench-cli
 </code></pre></div>
-<p>Here’s how you can generate the synthetic dataset:</p>
+<p>Here's how you can generate the synthetic dataset:</p>
 <div class="highlight"><pre><span></span><code>spatialbench-cli -s 1 --format=parquet
 </code></pre></div>
 <p>See the project repository <a href="https://github.com/apache/sedona-spatialbench">README</a> for the complete set of straightforward data generation instructions.</p>
 <h2 id="example-query">Example query<a class="headerlink" href="#example-query" title="Permanent link">¶</a></h2>
-<p>Here’s an example query that counts the number of trips that start within 500 meters of each building:</p>
+<p>Here's an example query that counts the number of trips that start within 500 meters of each building:</p>
 <div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
 <span class="w">    </span><span class="n">b</span><span class="p">.</span><span class="n">b_buildingkey</span><span class="p">,</span>
 <span class="w">    </span><span class="n">b</span><span class="p">.</span><span class="n">b_name</span><span class="p">,</span>
@@ -1812,7 +1815,7 @@
 <span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">b_buildingkey</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">b_name</span>
 <span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">nearby_pickup_count</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 </code></pre></div>
-<p>This query performs a distance join, followed by an aggregation.  It’s a great example of a query that’s useful for performance benchmarking a spatial engine that can process vector geometries.</p>
+<p>This query performs a distance join, followed by an aggregation. It's a great example of a query that's useful for performance benchmarking a spatial engine that can process vector geometries.</p>
 <h2 id="join-the-community">Join the community<a class="headerlink" href="#join-the-community" title="Permanent link">¶</a></h2>
 <p>Feel free to start a <a href="https://github.com/apache/sedona/discussions">GitHub Discussion</a> or join the <a href="https://discord.gg/9A3k5dEBsY">Discord community</a> to ask the developers any questions you may have.</p>
 <p>We look forward to collaborating with you on these benchmarks!</p>
@@ -1836,7 +1839,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="September 24, 2025 03:50:34 UTC">September 24, 2025 03:50:34</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="September 24, 2025 04:38:44 UTC">September 24, 2025 04:38:44</span>
   </span>
 
     

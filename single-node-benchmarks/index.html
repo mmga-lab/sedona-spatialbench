@@ -1905,34 +1905,33 @@
 <li>DuckDB: 1.4.0</li>
 <li>SedonaDB: 0.1</li>
 </ul>
-<p>This benchmark report lists software versions, so it’s easy to track how engine performance improves over time.  We use the default settings of all software unless otherwise noted. For DuckDB, we explicitly set enable_external_file_cache to false to focus on the cold start queries runtime, consistent with the other engines.</p>
+<p>This benchmark report lists software versions, so it's easy to track how engine performance improves over time.  We use the default settings of all software unless otherwise noted. For DuckDB, we explicitly set enable_external_file_cache to false to focus on the cold start queries runtime, consistent with the other engines.</p>
 <p>The code execution runtime includes the entire query runtime for all engines. The query timeout is set to 1200 seconds.</p>
 <h2 id="geopandas-query-methodology">GeoPandas query methodology<a class="headerlink" href="#geopandas-query-methodology" title="Permanent link">¶</a></h2>
 <p>The GeoPandas queries are written in Python, since GeoPandas does not support SQL. GeoPandas executes queries by loading data fully into memory and then processing it directly.</p>
-<p>Since GeoPandas runs in a single thread and lacks a query optimizer, any parallelization or optimization must be implemented manually. This benchmark implemented a straightforward implementation that mirrors the SQL queries used for other engines. If you’re a GeoPandas expert, we’d be glad to collaborate on a more optimized and/or parallelized version.</p>
+<p>Since GeoPandas runs in a single thread and lacks a query optimizer, any parallelization or optimization must be implemented manually. This benchmark implemented a straightforward implementation that mirrors the SQL queries used for other engines. If you're a GeoPandas expert, we'd be glad to collaborate on a more optimized and/or parallelized version.</p>
 <h2 id="result-analysis">Result analysis<a class="headerlink" href="#result-analysis" title="Permanent link">¶</a></h2>
 <h3 id="spatial-filters-q1q3-q6">Spatial filters (Q1–Q3, Q6)<a class="headerlink" href="#spatial-filters-q1q3-q6" title="Permanent link">¶</a></h3>
 <p>DuckDB and SedonaDB achieve similar low-latency performance at both SF 1 and SF 10, while GeoPandas struggles to keep up at larger scales. The main reasons are the lack of a query optimizer to choose efficient execution strategies and the absence of multi-core parallelism. By contrast, DuckDB and SedonaDB leverage columnar data layouts, vectorized execution, multi-core parallelism, and query optimization to achieve strong performance.</p>
 <h3 id="aggregation-with-spatial-joins-q4-q10-q11">Aggregation with spatial joins (Q4, Q10, Q11)<a class="headerlink" href="#aggregation-with-spatial-joins-q4-q10-q11" title="Permanent link">¶</a></h3>
 <p>SedonaDB consistently delivers strong results on heavier joins, particularly Q10 and Q11, aided by its adaptive spatial join strategy that picks the best algorithm per partition based on spatial statistics. DuckDB handles some join queries well but encounters scaling issues in certain cases, while GeoPandas completes SF 1 but not SF 10.</p>
 <h3 id="geometric-computations-q5-q7-q9">Geometric computations (Q5, Q7, Q9)<a class="headerlink" href="#geometric-computations-q5-q7-q9" title="Permanent link">¶</a></h3>
-<p>SedonaDB is especially effective on intersection/IoU (Q9), showing substantial efficiency improvements, while Q5 (convex hull aggregation) highlights areas where DuckDB currently performs faster. SedonaDB’s overhead in geometry copying in spatial aggregation is a known bottleneck and is planned for improvement.</p>
+<p>SedonaDB is especially effective on intersection/IoU (Q9), showing substantial efficiency improvements, while Q5 (convex hull aggregation) highlights areas where DuckDB currently performs faster. SedonaDB's overhead in geometry copying in spatial aggregation is a known bottleneck and is planned for improvement.</p>
 <h3 id="nearest-neighbor-joins-q12">Nearest-neighbor joins (Q12)<a class="headerlink" href="#nearest-neighbor-joins-q12" title="Permanent link">¶</a></h3>
 <p>SedonaDB completes KNN joins at both SF 1 and SF 10, thanks to its native operator and optimized algorithm. In contrast, DuckDB and GeoPandas currently lack built-in KNN join support. For these engines, we had to implement additional code manually, which proved less efficient. Adding native KNN capabilities in the future would likely help both engines close this gap.</p>
 <h3 id="overall">Overall<a class="headerlink" href="#overall" title="Permanent link">¶</a></h3>
 <p>SedonaDB demonstrates balanced strengths across all categories and successfully scales to SF 10 on an AWS m7i.2xlarge instance. DuckDB delivers solid performance on simpler filters and certain geometric computations, but has room to improve on complex joins and KNN queries. GeoPandas, while not scaling as effectively in this benchmark, remains a widely used tool in the Python ecosystem; however, it currently requires manual optimization and parallelization to be deployed at scale.</p>
 <h2 id="benchmark-code">Benchmark code<a class="headerlink" href="#benchmark-code" title="Permanent link">¶</a></h2>
 <p>You can access and run the benchmark code in the <a href="https://github.com/apache/sedona-spatialbench">sedona-spatialbench GitHub</a> repository.</p>
-<p>It’s easy to generate the datasets locally or in the cloud.  You can also run the benchmarks locally or in the cloud.</p>
+<p>It's easy to generate the datasets locally or in the cloud.  You can also run the benchmarks locally or in the cloud.</p>
 <p>The repository has an issue tracker where you can file bug reports or suggest code improvements.</p>
 <h2 id="future-work">Future work<a class="headerlink" href="#future-work" title="Permanent link">¶</a></h2>
 <p>It would be great to include other engines and databases in the future:</p>
 <ul>
-<li>dask-geopandas for single-node parallelism across cores</li>
-<li>PostGIS (Postgres SQL extension)</li>
+<li><code>dask-geopandas</code> for single-node parallelism across cores</li>
 <li>An R geospatial engine</li>
 </ul>
-<p>If you’re an expert in any of these technologies, we welcome you to take on this project or reach out to us about collaborating.</p>
+<p>If you're an expert in any of these technologies, we welcome you to take on this project or reach out to us about collaborating.</p>
 <p>Note that compute engines designed for multi-node environments are intentionally excluded from these single-node results for clarity and simplicity.</p>
 <p>Similarly, transactional databases such as PostGIS execute queries in fundamentally different ways than pure Python engines, like GeoPandas, or analytical engines, like SedonaDB and DuckDB. Since SpatialBench is primarily focused on analytical workloads, these systems are not yet included in this discussion.</p>
 <p>The overarching goal of the SpatialBench initiative is to provide the spatial community with a reliable set of benchmarks and to help accelerate the development of better tooling for users.</p>
@@ -1956,7 +1955,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="September 24, 2025 03:50:34 UTC">September 24, 2025 03:50:34</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="September 24, 2025 04:38:44 UTC">September 24, 2025 04:38:44</span>
   </span>
 
     
