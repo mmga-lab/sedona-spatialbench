@@ -8,8 +8,10 @@
       
       
       
-        <link rel="prev" href="../single-node-benchmarks/">
+        <link rel="prev" href="../datasets-generators/">
       
+      
+        <link rel="next" href="../queries/">
       
       
       <link rel="icon" href="../image/sedona_logo_symbol.png">
@@ -17,7 +19,7 @@
     
     
       
-        <title>Contributors Guide - SpatialBench</title>
+        <title>SpatialBench Data Distributions - SpatialBench</title>
       
     
     
@@ -82,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#our-development-process" class="md-skip">
+        <a href="#uniform" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Contributors Guide
+              SpatialBench Data Distributions
             
           </span>
         </div>
@@ -261,11 +263,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../spatialbench-distributions/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -321,13 +325,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../contributors-guide/" class="md-tabs__link">
           
   
   
@@ -991,26 +993,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -1023,7 +1030,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             SpatialBench Data Distributions
@@ -1034,10 +1041,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../spatialbench-distributions/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    SpatialBench Data Distributions
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1048,6 +1075,96 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#uniform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uniform
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Normal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagonal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagonal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sierpinski" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sierpinski
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thomas-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thomas Process
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hierarchical-thomas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hierarchical Thomas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1066,17 +1183,20 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2">
         
           
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
             
   
   
@@ -1570,31 +1690,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1607,7 +1722,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Contributors Guide
@@ -1618,30 +1733,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Contributors Guide
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../contributors-guide/" class="md-nav__link">
         
   
   
@@ -1652,69 +1747,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#our-development-process" class="md-nav__link">
-    <span class="md-ellipsis">
-      Our Development Process
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pull Requests
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#filing-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filing Issues
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#coding-style" class="md-nav__link">
-    <span class="md-ellipsis">
-      Coding Style
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1733,20 +1765,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2">
         
           
-          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
             
   
   
@@ -1897,45 +1926,72 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#our-development-process" class="md-nav__link">
+  <a href="#uniform" class="md-nav__link">
     <span class="md-ellipsis">
-      Our Development Process
+      Uniform
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
+  <a href="#normal" class="md-nav__link">
     <span class="md-ellipsis">
-      Pull Requests
+      Normal
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#filing-issues" class="md-nav__link">
+  <a href="#diagonal" class="md-nav__link">
     <span class="md-ellipsis">
-      Filing Issues
+      Diagonal
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#coding-style" class="md-nav__link">
+  <a href="#bit" class="md-nav__link">
     <span class="md-ellipsis">
-      Coding Style
+      Bit
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
+  <a href="#sierpinski" class="md-nav__link">
     <span class="md-ellipsis">
-      License
+      Sierpinski
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thomas-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thomas Process
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hierarchical-thomas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hierarchical Thomas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
     </span>
   </a>
   
@@ -1957,7 +2013,7 @@
 
 
   
-    <a href="https://github.com/apache/sedona-spatialbench/blob/main/docs/contributors-guide.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/apache/sedona-spatialbench/blob/main/docs/spatialbench-distributions.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1965,7 +2021,7 @@
   
 
 
-  <h1>Contributors Guide</h1>
+  <h1>SpatialBench Data Distributions</h1>
 
 <!---
   Licensed to the Apache Software Foundation (ASF) under one
@@ -1982,30 +2038,78 @@
   KIND, either express or implied.  See the License for the
   specific language governing permissions and limitations
   under the License.
---><p>We want to make contributing to SpatialBench as easy and transparent as
-possible. If you have suggestions to improve this contribution guide, feel
-free to <a href="https://github.com/apache/sedona-spatialbench/issues">open an issue in GitHub</a>.</p>
-<h2 id="our-development-process">Our Development Process<a class="headerlink" href="#our-development-process" title="Permanent link">¶</a></h2>
-<p>To contribute, please find an existing issue or open a new one. Claiming the issue you are working on helps us better track progress.</p>
-<h2 id="pull-requests">Pull Requests<a class="headerlink" href="#pull-requests" title="Permanent link">¶</a></h2>
-<p>We actively welcome your pull requests.</p>
-<ol>
-<li>Fork the repo and create your branch from <code>main</code>.</li>
-<li>If you've added code that should be tested, add tests.</li>
-<li>If you've changed APIs, update the related documentation.</li>
-<li>Ensure the standard tests and conformance tests are passing.</li>
-<li>Ensure your code follows Rust best practices and addresses all lints from clippy.</li>
-<li>Open your pull request and wait for a review and approval.</li>
-</ol>
-<h2 id="filing-issues">Filing Issues<a class="headerlink" href="#filing-issues" title="Permanent link">¶</a></h2>
-<p>When opening a new issue, please follow the issue template and provide as many details
-as possible, including a reproducible example if applicable.</p>
-<h2 id="coding-style">Coding Style<a class="headerlink" href="#coding-style" title="Permanent link">¶</a></h2>
-<p>Follow standard Rust formatting guidelines. For idiomatic code
-style, consult <a href="https://www.lurklurk.org/effective-rust/title-page.html">Effective Rust</a>.</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">¶</a></h2>
-<p>By contributing to SpatialBench, you agree that your contributions will be licensed
-under the <code>LICENSE</code> file in the root directory of this source tree.</p>
+--><p>SpatialBench offers a set of spatial distributions to generate synthetic datasets with different levels of skew and realism. Each distribution has its own mathematical foundation, parameters, and characteristic spatial patterns. The choice of distribution directly determines whether your data looks like evenly spaced dots on a map, concentrated hotspots, or layered urban clusters.</p>
+<h2 id="uniform">Uniform<a class="headerlink" href="#uniform" title="Permanent link">¶</a></h2>
+<p>The simplest case: every point is drawn independently from a uniform distribution in the unit square [0,1]^2.</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+X \sim U(0,1), \quad Y \sim U(0,1)
+</div>
+<script type="math/tex; mode=display">
+X \sim U(0,1), \quad Y \sim U(0,1)
+</script>
+</div>
+<p>There are no parameters to adjust here. The result is an even, flat distribution — useful as a baseline, but one that rarely resembles any real-world spatial dataset. If your goal is to test systems without the confounding factor of skew, this is the place to start.</p>
+<h2 id="normal">Normal<a class="headerlink" href="#normal" title="Permanent link">¶</a></h2>
+<p>The normal distribution introduces clustering. Both coordinates are drawn from a Gaussian with configurable mean and standard deviation:</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+X, Y \sim \mathcal{N}(\mu, \sigma^2), \quad \text{clamped to } [0,1]
+</div>
+<script type="math/tex; mode=display">
+X, Y \sim \mathcal{N}(\mu, \sigma^2), \quad \text{clamped to } [0,1]
+</script>
+</div>
+<p>Here, <code>mu</code> determines where the hotspot sits in the square, while <code>sigma</code> sets the spread - a small <code>sigma</code> produces a sharp, dense cluster, while a larger sigma spreads points more thinly across space. This is appropriate if you want to mimic a single dense center of activity, like one city in an otherwise empty region. The tradeoff is that it’s too simplistic for modeling multiple hotspots or urban complexity.</p>
+<h2 id="diagonal">Diagonal<a class="headerlink" href="#diagonal" title="Permanent link">¶</a></h2>
+<p>The diagonal distribution forces correlation between x and y. With probability percentage, a point is placed exactly on the line y=x. Otherwise, it is perturbed by Gaussian noise with width controlled by buffer. The result is a band of points hugging the diagonal.</p>
+<p>This pattern is not realistic geographically, but it is useful for experiments that need a known correlation structure — for example, seeing how indexing or filtering behaves when coordinates are not independent.</p>
+<h2 id="bit">Bit<a class="headerlink" href="#bit" title="Permanent link">¶</a></h2>
+<p>Bit distributions use recursive binary subdivision of the square. Each bit position is toggled with probability <code>probability</code>, and the depth of recursion is determined by <code>digits</code>. This produces coordinates that fall into a deterministic grid structure, with cells that may or may not be occupied depending on the randomness of the bits.</p>
+<p>The result looks like a lattice of points at varying resolutions. Increasing digits refines the grid; lowering probability sparsifies it. This distribution is intentionally synthetic, good for stress-testing systems against very regular data.</p>
+<h2 id="sierpinski">Sierpinski<a class="headerlink" href="#sierpinski" title="Permanent link">¶</a></h2>
+<p>Sierpinski patterns come from iterating the “chaos game” toward the vertices of a triangle. After many steps, the points fall into the classic self-similar fractal: a carpet of nested triangular holes. There are no parameters to tune here.</p>
+<p>While this is not meant to reflect any natural process, it does generate extreme skew — dense regions interspersed with large gaps — making it a good way to see how systems handle pathological clustering.</p>
+<h2 id="thomas-process">Thomas Process<a class="headerlink" href="#thomas-process" title="Permanent link">¶</a></h2>
+<p>The Thomas (Gaussian Neyman–Scott) process generates hotspots by layering parent and offspring points. Parent centers are placed deterministically using a Halton sequence. Each parent is assigned a weight drawn from a Pareto distribution, then spawns offspring distributed around it with Gaussian noise of standard deviation sigma.</p>
+<p>Key parameters:</p>
+<ul>
+<li><code>parents</code> sets how many hotspots exist overall.</li>
+<li><code>mean_offspring</code> scales the global density.</li>
+<li><code>sigma</code> controls how spread out each cluster is.</li>
+<li><code>pareto_alpha</code> and <code>pareto_xm</code> shape the skew in cluster sizes: small alpha values mean a few parents dominate with very large clusters, while most parents remain small.</li>
+</ul>
+<p>The result is a landscape of uneven hotspots - some bustling, others barely populated. This makes it much closer to real-world trip or building distributions than uniform or normal alone.</p>
+<h2 id="hierarchical-thomas">Hierarchical Thomas<a class="headerlink" href="#hierarchical-thomas" title="Permanent link">¶</a></h2>
+<p>The Hierarchical (or Nested) Thomas process extends the idea by introducing two levels. First, a “city” is selected, with city weights drawn from a Pareto distribution. Within the chosen city, the number of subclusters (neighborhoods) is itself random — normally distributed around a mean with given variance and bounded by min/max limits. Finally, a subcluster is picked (again Pareto-weighted), and the final point is drawn from a Gaussian around that subcluster.</p>
+<p>The parameters mirror this structure:</p>
+<ul>
+<li><code>cities</code> controls the number of top-level hubs.</li>
+<li><code>sub_mean</code>, <code>sub_sd</code>, <code>sub_min</code>, <code>sub_max</code> govern how many neighborhoods each city has.</li>
+<li><code>sigma_city</code> spreads neighborhoods around the city center; <code>sigma_sub</code> spreads points around a neighborhood.</li>
+<li>The <code>pareto_alpha</code>/<code>pareto_xm</code> pairs separately skew city sizes and neighborhood sizes.</li>
+</ul>
+<p>This distribution produces realistic multi-scale patterns: large cities with many dense neighborhoods, small towns with just a few sparse clusters. It captures the layered heterogeneity of real settlement data in a way no single-level process can.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>Spider distributions (Uniform, Normal, Bit, Sierpinski, Diagonal):</strong><ul>
+<li>Puloma Katiyar, Tin Vu, Sara Migliorini, Alberto Belussi, Ahmed Eldawy. <em>SpiderWeb: A Spatial Data Generator on the Web</em>. <a href="https://dl.acm.org/doi/10.1145/3397536.3422351">ACM SIGSPATIAL 2020</a>, Seattle, WA.</li>
+</ul>
+</li>
+<li><strong>Thomas / Neyman–Scott cluster processes:</strong><ul>
+<li>Thomas, M. (1949). <em>A Generalization of Poisson’s Binomial Limit For use in Ecology</em>.&nbsp;<a href="https://doi.org/10.2307/2332526"><em>Biometrika</em>,&nbsp;<em>36</em>(½)</a>, 18–25.</li>
+</ul>
+</li>
+<li>Jerzy Neyman, Elizabeth L. Scott, <em>Statistical Approach to Problems of Cosmology</em>,&nbsp;<a href="https://doi.org/10.1111/j.2517-6161.1958.tb00272.x"><em>Journal of the Royal Statistical Society: Series B (Methodological)</em>, Volume 20, Issue 1, January 1958</a>, Pages 1–29&nbsp;  </li>
+<li><strong>Point process theory:</strong><ul>
+<li>Illian, J., Penttinen, A., Stoyan, H., &amp; Stoyan, D. (2008). <em>Statistical Analysis and Modelling of Spatial Point Patterns</em>. Wiley.</li>
+</ul>
+</li>
+<li><strong>Fractal generation (Sierpinski):</strong><ul>
+<li>Barnsley, M. F., &amp; Demko, S. (1985). <em>Iterated function systems and the global construction of fractals</em>. <a href="https://doi.org/10.1098/rspa.1985.0057">Proceedings of the Royal Society of London. Series A, 399(1817)</a>, 243–275.</li>
+</ul>
+</li>
+</ul>
 
 
 
@@ -2062,7 +2166,7 @@ under the <code>LICENSE</code> file in the root directory of this source tree.</
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../single-node-benchmarks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SpatialBench Single Node Benchmarks">
+          <a href="../datasets-generators/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SpatialBench Datasets and Generators">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2072,11 +2176,27 @@ under the <code>LICENSE</code> file in the root directory of this source tree.</
                 Previous
               </span>
               <div class="md-ellipsis">
-                SpatialBench Single Node Benchmarks
+                SpatialBench Datasets and Generators
               </div>
             </div>
           </a>
         
+        
+          
+          <a href="../queries/" class="md-footer__link md-footer__link--next" aria-label="Next: Run the SpatialBench Queries">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Run the SpatialBench Queries
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
         
       </nav>
     
