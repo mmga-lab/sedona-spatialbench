@@ -2,9 +2,9 @@
 name = "spatialbench-arrow"
 version = "1.1.1"
 edition = "2024"
-authors = ["clflushopt", "alamb"]
-description = "TPC-H data generator into Apache Arrow format"
-repository = "https://github.com/wherobots/sedona-spatialbench"
+authors = ["Apache Sedona <dev@sedona.apache.org>"]
+description = "SpatialBench data generator into Apache Arrow format"
+repository = "https://github.com/apache/sedona-spatialbench"
 readme = "README.md"
 license = "Apache-2.0"
 

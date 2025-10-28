@@ -39,34 +39,7 @@ use std::time::Instant;
 #[derive(Parser)]
 #[command(name = "spatialbench")]
 #[command(version)]
-#[command(
-    // -h output
-    about = "TPC-H Data Generator",
-    // --help output
-    long_about = r#"
-TPCH Data Generator (https://github.com/clflushopt/spatialbench-rs)
-
-By default each table is written to a single file named <output_dir>/<table>.<format>
-
-If `--part` option is specified, each table is written to a subdirectory in
-multiple files named <output_dir>/<table>/<table>.<part>.<format>
-
-Examples
-
-# Generate all tables at scale factor 1 (1GB) in TBL format to /tmp/tpch directory:
-
-spatialbench-cli -s 1 --output-dir=/tmp/tpch
-
-# Generate the lineitem table at scale factor 100 in 10 Apache Parquet files to
-# /tmp/tpch/lineitem
-
-spatialbench-cli -s 100 --tables=lineitem --format=parquet --parts=10 --output-dir=/tmp/tpch
-
-# Generate scale factor one in current directory, seeing debug output
-
-RUST_LOG=debug spatialbench -s 1
-"#
-)]
+#[command(about = "SpatialBench Data Generator", long_about = None)]
 struct Cli {
     /// Scale factor to create
     #[arg(short, long, default_value_t = 1.)]
