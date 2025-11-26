@@ -15,171 +15,94 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: packaging
+name: Build and Deploy Docs
 
 on:
   push:
     branches:
       - main
-      - 'branch-*'
-    tags:
-        - 'sedona-spatialbench-*-rc*'
   pull_request:
     branches:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: ${{ github.repository }}-${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
-  source:
+  build-docs:
+    name: Build Documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
-      - name: Install Java for RAT
-        run: sudo apt-get update && sudo apt-get install -y default-jdk
-
-      - name: Prepare dev version
-        shell: bash
-        run: |
-          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
-            # In the case of a tag, the version in Cargo.toml is already correct
-            VERSION=${GITHUB_REF_NAME#sedona-spatialbench-}
-            VERSION=${VERSION%-rc*}
-          elif [[ "${GITHUB_REF##*/}" =~ ^branch-[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            VERSION="${GITHUB_REF##*/branch-}"
-          else
-            # Set an alpha version and save it to env
-            VERSION=$(python ci/scripts/set_dev_version.py)
-          fi
-
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
-
-      - name: Create archive
-        shell: bash
-        run: |
-          ci/scripts/build-source.sh \
-            apache-sedona-spatialbench-${VERSION} \
-            $(git log -n 1 --format=%h)
-
-      - name: Run Release Audit Tool
-        shell: bash
-        run: |
-          dev/release/run-rat.sh apache-sedona-spatialbench-${{ env.VERSION }}.tar.gz
-
-      - uses: actions/upload-artifact@v5
-        with:
-          name: source
-          retention-days: 7
-          path: |
-            apache-sedona-spatialbench-${{ env.VERSION }}.tar.gz
-
-  docs-and-deploy:
-    runs-on: ubuntu-latest
-    env:
-      CARGO_INCREMENTAL: 0
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version: "3.x"
-
-      - uses: Swatinem/rust-cache@v2
-        with:
-          # Update this key to force a new cache
-          prefix-key: "docs-v1"
-
       - name: Install docs requirements
-        run: |
-            pip install -r docs/requirements.txt
+        run: pip install -r docs/requirements.txt
 
       - name: Build documentation
-        run: |
-          ci/scripts/build-docs.sh
+        # Using mkdocs build is the standard way to generate the site
+        run: mkdocs build --strict
 
-      - name: Compress docs
+      - name: Compress docs for artifact upload
         run: |
-          cp -R site spatialbench-docs
-          tar -czf docs.tgz spatialbench-docs
+          # The update-asf-site job expects a specific folder name inside the tarball
+          cp -R site documentation-site
+          tar -czf docs.tgz documentation-site
 
-      - name: Upload docs
-        uses: actions/upload-artifact@v5
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           retention-days: 2
-          path: |
-            docs.tgz
+          path: docs.tgz
 
-      - name: Deploy the doc to the website branch
-        if: ${{ github.event_name != 'pull_request' && github.repository == 'apache/sedona-spatialbench' }}
+  update-asf-site:
+    name: Deploy Dev Snapshot
+    runs-on: ubuntu-latest
+    needs:
+      - build-docs
+    # This job should only run on pushes to the main branch
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: docs
+
+      - name: Clone asf-site branch
+        uses: actions/checkout@v4
+        with:
+          ref: asf-site
+          path: pages-clone
+
+      - name: Update development documentation
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          git fetch origin asf-site --depth=1
 
-          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            # For main branch, update the asf-site branch directly
-            git checkout asf-site
-            # Remove all existing content except .git directory
-            find . -maxdepth 1 -not -name '.git' -not -name '.' -exec rm -rf {} +
-            # Extract docs from the artifact
-            tar -xzf docs.tgz
-            mv spatialbench-docs/* .
-            mv spatialbench-docs/.* . 2>/dev/null || true
-            rmdir spatialbench-docs
-            git add .
-            git commit --allow-empty -m "update documentation for main branch"
-            git push origin asf-site
-          elif [[ "${GITHUB_REF##*/}" =~ ^branch-[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            # For release branches, we could add versioned docs here if needed
-            echo "Release branch documentation deployment not yet implemented"
-          fi
+          cd pages-clone
+          # Remove all existing content except .git directory
+          find . -maxdepth 1 -not -name '.git' -not -name '.' -exec rm -rf {} +
 
-  create-release:
-    runs-on: ubuntu-latest
-    needs:
-      - docs-and-deploy
-      - source
-    permissions:
-      contents: write
+          tar -xf ../docs.tgz
+          # Move all content from documentation-site to root of asf-site branch
+          mv documentation-site/* .
+          mv documentation-site/.* . 2>/dev/null || true
+          rmdir documentation-site
 
-    steps:
-      - name: Get all artifacts
-        uses: actions/download-artifact@v6
-        with:
-          path: release-artifacts
+          git add *
+          git commit --allow-empty -m"update documentation for main branch"
 
-      - name: List release artifacts
+      - name: Push development documentation to asf-site
+        # Ensure this push only happens on the intended repository
+        if: success() && github.repository == 'apache/sedona-spatialbench'
         run: |
-          find release-artifacts -type f
-
-      - name: Create release
-        if: success() && startsWith(github.ref, 'refs/tags/')
-        run: |
-          RELEASE_TAG=${GITHUB_REF#refs/*/}
-          UPLOAD=$(find release-artifacts -type f)
-
-          gh release create "${RELEASE_TAG}" \
-            --repo ${{ github.repository }} \
-            --prerelease \
-            --title "SpatialBench ${RELEASE_TAG}" \
-            ${UPLOAD}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          cd pages-clone
+          git push

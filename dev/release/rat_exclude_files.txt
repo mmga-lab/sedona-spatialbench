@@ -7,6 +7,5 @@ docs-overrides/**
 raster/output/**
 spatialbench/data/sf-v1/*.tbl.gz
 spatialbench/data/sf-v1/*.parquet
-target/**
 dev/release/rat_exclude_files.txt
 

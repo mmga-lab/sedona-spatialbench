@@ -7,12 +7,18 @@ SpatialBench is a benchmark for assessing geospatial SQL analytics query perform
 The benchmark uses a realistic but synthetic, transportation-themed dataset to ensure the queries reflect practical use cases. By running these queries, you can evaluate and compare the relative performance of different spatial query engines in a consistent and unbiased manner.
 
 ## Before you start
-Before running this notebook, ensure that you have installed the packages in the `requirements.txt` file: 
+
+Before running this notebook, ensure that you have installed the packages in the `requirements.txt` file:
 
 
 ```python
 %pip install -r ~/sedona-spatialbench/docs/requirements.txt
 ```
+
+    ...
+    ...
+    Note: you may need to restart the kernel to use updated packages.
+
 
 Additionally, install the SpatialBench CLI and generate the synthetic data on your machine:
 
@@ -226,7 +232,7 @@ ORDER BY trip_count DESC, z.z_zonekey ASC
 
 ## Q5: Monthly travel patterns for repeat customers (convex hull of dropoff locations)
 
-**Real-life scenario:** Analyze the geographic spread of travel patterns for frequent customers to understand their mobility behavior.  
+**Real-life scenario:** Analyze the geographic spread of travel patterns for frequent customers to understand their mobility behavior.
 
 This query analyzes the monthly travel patterns of frequent customers by measuring how much geographic area they cover with their trips. For each customer who took more than five trips in a month, it calculates the size of the "travel hull" - the area enclosed by connecting all their dropoff locations that month. The results reveal which customers have the most expansive travel patterns, helping to identify power users who cover large geographic areas versus those who stick to smaller, local areas.
 
