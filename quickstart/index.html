@@ -1262,16 +1262,18 @@ cargo<span class="w"> </span>install<span class="w"> </span>--path<span class="w
 <div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--help
 </code></pre></div>
 <h2 id="generate-sf1-data">Generate SF1 Data<a class="headerlink" href="#generate-sf1-data" title="Permanent link">¶</a></h2>
-<p>To generate the full dataset at scale factor 1 in Parquet format:
-</p><div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">1</span>
-</code></pre></div><p></p>
-<p>This creates six tables:
-* trip
-* customer
-* driver
-* vehicle
-* zone
-* building</p>
+<p>To generate the full dataset at scale factor 1 in Parquet format:</p>
+<div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<p>This creates six tables:</p>
+<ul>
+<li>trip</li>
+<li>customer</li>
+<li>driver</li>
+<li>vehicle</li>
+<li>zone</li>
+<li>building</li>
+</ul>
 <p>Output is written to the current directory by default.</p>
 <h2 id="customizing-output-files">Customizing Output Files<a class="headerlink" href="#customizing-output-files" title="Permanent link">¶</a></h2>
 <p>We'll go over a few common options to customize the output files. To see all available options, run <code>spatialbench-cli --help</code>.</p>
@@ -1279,23 +1281,23 @@ cargo<span class="w"> </span>install<span class="w"> </span>--path<span class="w
 <div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">1</span><span class="w"> </span>--tables<span class="w"> </span>trip,building
 </code></pre></div>
 <h3 id="partition-table-output-into-multiple-files">Partition Table Output into Multiple Files<a class="headerlink" href="#partition-table-output-into-multiple-files" title="Permanent link">¶</a></h3>
-<p>Specify the number of partitions manually:
-</p><div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">10</span><span class="w"> </span>--tables<span class="w"> </span>trip<span class="w"> </span>--parts<span class="w"> </span><span class="m">4</span>
-</code></pre></div><p></p>
-<p>Or let the CLI determine the number of files using target size:
-</p><div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">10</span><span class="w"> </span>--mb-per-file<span class="w"> </span><span class="m">512</span>
-</code></pre></div><p></p>
+<p>Specify the number of partitions manually:</p>
+<div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">10</span><span class="w"> </span>--tables<span class="w"> </span>trip<span class="w"> </span>--parts<span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+<p>Or let the CLI determine the number of files using target size:</p>
+<div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">10</span><span class="w"> </span>--mb-per-file<span class="w"> </span><span class="m">512</span>
+</code></pre></div>
 <h3 id="set-output-directory">Set Output Directory<a class="headerlink" href="#set-output-directory" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">1</span><span class="w"> </span>--output-dir<span class="w"> </span>data/sf1
 </code></pre></div>
 <h2 id="configuring-spatial-distributions">Configuring Spatial Distributions<a class="headerlink" href="#configuring-spatial-distributions" title="Permanent link">¶</a></h2>
 <p>SpatialBench uses a spatial data generator to generate synthetic points and polygons using realistic spatial distributions.</p>
-<p>To read more about the different spatial distributions offered by SpatialBench see <a href="https://sedona.apache.org/spatialbench/spatialbench-distributions/">here</a>.
-For more details about tuning the spatial distributions and the full YAML schema and examples, see <a href="https://github.com/apache/sedona-spatialbench/blob/main/spatialbench-cli/CONFIGURATION.md">CONFIGURATION.md</a>.</p>
+<p>To read more about the different spatial distributions offered by SpatialBench see <a href="https://sedona.apache.org/spatialbench/spatialbench-distributions/">here</a>.</p>
+<p>For more details about tuning the spatial distributions and the full YAML schema and examples, see <a href="https://github.com/apache/sedona-spatialbench/blob/main/spatialbench-cli/CONFIGURATION.md">CONFIGURATION.md</a>.</p>
 <p>You can override these defaults at runtime by passing a YAML file via the <code>--config</code> flag:</p>
 <div class="highlight"><pre><span></span><code>spatialbench-cli<span class="w"> </span>--scale-factor<span class="w"> </span><span class="m">1</span><span class="w"> </span>--config<span class="w"> </span>spatialbench-config.yml
 </code></pre></div>
-<p>If <code>--config</code> is not provided, SpatialBench checks for ./spatialbench-config.yml. If absent, it falls back to built-in defaults.</p>
+<p>If <code>--config</code> is not provided, SpatialBench checks for <code>./spatialbench-config.yml</code>. If absent, it falls back to built-in defaults.</p>
 
 
 
@@ -1316,7 +1318,7 @@ For more details about tuning the spatial distributions and the full YAML schema
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="December 2, 2025 19:19:31 UTC">December 2, 2025 19:19:31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime" title="December 15, 2025 17:37:08 UTC">December 15, 2025 17:37:08</span>
   </span>
 
     
