@@ -37,7 +37,8 @@ from pathlib import Path
 from typing import Any, Callable
 
 # Add spatialbench-queries directory to path to import query modules
-sys.path.insert(0, str(Path(__file__).parent.parent / "spatialbench-queries"))
+# Use append (not insert) so installed packages like spatial_polars are found first
+sys.path.append(str(Path(__file__).parent.parent / "spatialbench-queries"))
 
 # Constants
 QUERY_COUNT = 12
@@ -103,6 +104,10 @@ def _run_query_in_process(
     too much memory, which SIGALRM cannot do for native code.
     """
     try:
+        # For Spatial Polars, ensure the package is imported first to register namespace
+        if engine_class.__name__ == "SpatialPolarsBenchmark":
+            import spatial_polars as _sp  # noqa: F401
+        
         benchmark = engine_class(data_paths)
         benchmark.setup()
         try:
@@ -310,6 +315,35 @@ class SedonaDBBenchmark(BaseBenchmark):
         return len(result), result
 
 
+class SpatialPolarsBenchmark(BaseBenchmark):
+    """Spatial Polars benchmark runner."""
+    
+    def __init__(self, data_paths: dict[str, str]):
+        super().__init__(data_paths, "spatial_polars")
+        self._queries = None
+    
+    def setup(self) -> None:
+        # spatial_polars package is already imported in _run_query_in_process
+        # to register .spatial namespace before any module loading
+        
+        # Load query functions directly from the module
+        import importlib.util
+        query_file = Path(__file__).parent.parent / "spatialbench-queries" / "spatial_polars.py"
+        spec = importlib.util.spec_from_file_location("spatial_polars_queries", query_file)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self._queries = {f"q{i}": getattr(module, f"q{i}") for i in range(1, QUERY_COUNT + 1)}
+    
+    def teardown(self) -> None:
+        self._queries = None
+    
+    def execute_query(self, query_name: str, query: str | None) -> tuple[int, Any]:
+        if query_name not in self._queries:
+            raise ValueError(f"Query {query_name} not found")
+        result = self._queries[query_name](self.data_paths)
+        return len(result), result
+
+
 def get_sql_queries(dialect: str) -> dict[str, str]:
     """Get SQL queries for a specific dialect from print_queries.py."""
     from print_queries import DuckDBSpatialBenchBenchmark, SedonaDBSpatialBenchBenchmark
@@ -425,15 +459,23 @@ def run_benchmark(
             "version_getter": lambda: pkg_version("sedonadb"),
             "queries_getter": lambda: get_sql_queries("sedonadb"),
         },
+        "spatial_polars": {
+            "class": SpatialPolarsBenchmark,
+            "version_getter": lambda: pkg_version("spatial-polars"),
+            "queries_getter": lambda: {f"q{i}": None for i in range(1, QUERY_COUNT + 1)},
+        },
     }
     
     config = configs[engine]
     version = config["version_getter"]()
     
+    # Format engine name for display
+    display_name = engine.replace("_", " ").title()
+    
     print(f"\n{'=' * 60}")
-    print(f"Running {engine.title()} Benchmark")
+    print(f"Running {display_name} Benchmark")
     print(f"{'=' * 60}")
-    print(f"{engine.title()} version: {version}")
+    print(f"{display_name} version: {version}")
     if runs > 1:
         print(f"Runs per query: {runs} (average will be reported)")
     
@@ -548,11 +590,11 @@ def save_results(results: list[BenchmarkSuite], output_file: str) -> None:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Run SpatialBench benchmarks comparing SedonaDB, DuckDB, and GeoPandas"
+        description="Run SpatialBench benchmarks comparing SedonaDB, DuckDB, GeoPandas, and Spatial Polars"
     )
     parser.add_argument("--data-dir", type=str, required=True,
                         help="Path to directory containing benchmark data (parquet files)")
-    parser.add_argument("--engines", type=str, default="duckdb,geopandas",
+    parser.add_argument("--engines", type=str, default="duckdb,geopandas,sedonadb,spatial_polars",
                         help="Comma-separated list of engines to benchmark")
     parser.add_argument("--queries", type=str, default=None,
                         help="Comma-separated list of queries to run (e.g., q1,q2,q3)")
@@ -568,7 +610,7 @@ def main():
     args = parser.parse_args()
     
     engines = [e.strip().lower() for e in args.engines.split(",")]
-    valid_engines = {"duckdb", "geopandas", "sedonadb"}
+    valid_engines = {"duckdb", "geopandas", "sedonadb", "spatial_polars"}
     
     for e in engines:
         if e not in valid_engines:

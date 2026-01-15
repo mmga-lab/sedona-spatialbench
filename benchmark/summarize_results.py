@@ -99,6 +99,7 @@ def generate_markdown_summary(results: dict, output_file: str, query_timeout: in
         "sedonadb": "🌵 SedonaDB",
         "duckdb": "🦆 DuckDB",
         "geopandas": "🐼 GeoPandas",
+        "spatial_polars": "🐻‍❄️ Spatial Polars",
     }
     
     # Generate markdown

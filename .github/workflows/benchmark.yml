@@ -32,7 +32,7 @@ on:
       engines:
         description: 'Engines to benchmark (comma-separated)'
         required: false
-        default: 'duckdb,geopandas,sedonadb'
+        default: 'duckdb,geopandas,sedonadb,spatial_polars'
         type: string
       timeout:
         description: 'Query timeout in seconds (default: 60, increase for full benchmark)'
@@ -54,6 +54,11 @@ on:
         required: false
         default: ''
         type: string
+      spatial_polars_version:
+        description: 'Spatial Polars version (e.g., 1.0.0, leave empty for latest)'
+        required: false
+        default: ''
+        type: string
       runs:
         description: 'Number of runs per query (average taken for fair comparison)'
         required: false
@@ -71,13 +76,14 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   SCALE_FACTOR: ${{ github.event.inputs.scale_factor || '1' }}
-  BENCHMARK_ENGINES: ${{ github.event.inputs.engines || 'duckdb,geopandas,sedonadb' }}
+  BENCHMARK_ENGINES: ${{ github.event.inputs.engines || 'duckdb,geopandas,sedonadb,spatial_polars' }}
   QUERY_TIMEOUT: ${{ github.event.inputs.timeout || '60' }}
   BENCHMARK_RUNS: ${{ github.event.inputs.runs || '3' }}
   # Package versions (empty = latest, can be overridden via workflow_dispatch)
   SEDONADB_VERSION: ${{ github.event.inputs.sedonadb_version }}
   DUCKDB_VERSION: ${{ github.event.inputs.duckdb_version }}
   GEOPANDAS_VERSION: ${{ github.event.inputs.geopandas_version }}
+  SPATIAL_POLARS_VERSION: ${{ github.event.inputs.spatial_polars_version }}
   # Hugging Face dataset for benchmark data
   HF_DATASET: apache-sedona/spatialbench
   HF_DATA_VERSION: v0.1.0
@@ -170,7 +176,7 @@ jobs:
     name: Benchmark DuckDB (SF${{ github.event.inputs.scale_factor || '1' }})
     needs: download-data
     runs-on: ubuntu-latest
-    if: contains(github.event.inputs.engines || 'duckdb,geopandas,sedonadb', 'duckdb')
+    if: contains(github.event.inputs.engines || 'duckdb,geopandas,sedonadb,spatial_polars', 'duckdb')
     steps:
       - uses: actions/checkout@v4
       
@@ -220,7 +226,7 @@ jobs:
     name: Benchmark GeoPandas (SF${{ github.event.inputs.scale_factor || '1' }})
     needs: download-data
     runs-on: ubuntu-latest
-    if: contains(github.event.inputs.engines || 'duckdb,geopandas,sedonadb', 'geopandas')
+    if: contains(github.event.inputs.engines || 'duckdb,geopandas,sedonadb,spatial_polars', 'geopandas')
     steps:
       - uses: actions/checkout@v4
       
@@ -266,7 +272,7 @@ jobs:
     name: Benchmark SedonaDB (SF${{ github.event.inputs.scale_factor || '1' }})
     needs: download-data
     runs-on: ubuntu-latest
-    if: contains(github.event.inputs.engines || 'duckdb,geopandas,sedonadb', 'sedonadb')
+    if: contains(github.event.inputs.engines || 'duckdb,geopandas,sedonadb,spatial_polars', 'sedonadb')
     steps:
       - uses: actions/checkout@v4
       
@@ -308,10 +314,56 @@ jobs:
           path: sedonadb_results.json
           retention-days: 30
 
+  benchmark-spatial-polars:
+    name: Benchmark Spatial Polars (SF${{ github.event.inputs.scale_factor || '1' }})
+    needs: download-data
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.engines || 'duckdb,geopandas,sedonadb,spatial_polars', 'spatial_polars')
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Restore benchmark data from cache
+        uses: actions/cache/restore@v4
+        with:
+          path: benchmark-data-sf${{ env.SCALE_FACTOR }}
+          key: benchmark-data-${{ env.HF_DATA_VERSION }}-sf${{ env.SCALE_FACTOR }}
+          fail-on-cache-miss: true
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          if [ -n "${{ env.SPATIAL_POLARS_VERSION }}" ]; then
+            pip install "spatial-polars[knn]==${{ env.SPATIAL_POLARS_VERSION }}" pyarrow
+          else
+            pip install "spatial-polars[knn]" pyarrow
+          fi
+          echo "Installed Spatial Polars version: $(python -c 'from importlib.metadata import version; print(version(\"spatial-polars\"))')"
+      
+      - name: Run Spatial Polars benchmark
+        run: |
+          python benchmark/run_benchmark.py \
+            --data-dir benchmark-data-sf${{ env.SCALE_FACTOR }} \
+            --engines spatial_polars \
+            --timeout ${{ env.QUERY_TIMEOUT }} \
+            --runs ${{ env.BENCHMARK_RUNS }} \
+            --scale-factor ${{ env.SCALE_FACTOR }} \
+            --output spatial_polars_results.json
+      
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: spatial_polars-results-sf${{ env.SCALE_FACTOR }}
+          path: spatial_polars_results.json
+          retention-days: 30
+
   summarize-results:
     name: Summarize Results (SF${{ github.event.inputs.scale_factor || '1' }})
-    needs: [benchmark-duckdb, benchmark-geopandas, benchmark-sedonadb]
-    if: always() && (needs.benchmark-duckdb.result == 'success' || needs.benchmark-geopandas.result == 'success' || needs.benchmark-sedonadb.result == 'success')
+    needs: [benchmark-duckdb, benchmark-geopandas, benchmark-sedonadb, benchmark-spatial-polars]
+    if: always() && (needs.benchmark-duckdb.result == 'success' || needs.benchmark-geopandas.result == 'success' || needs.benchmark-sedonadb.result == 'success' || needs.benchmark-spatial-polars.result == 'success')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -333,9 +385,18 @@ jobs:
         continue-on-error: true
       
       - name: Download SedonaDB results
+        if: needs.benchmark-sedonadb.result == 'success'
         uses: actions/download-artifact@v4
         with:
           name: sedonadb-results-sf${{ env.SCALE_FACTOR }}
+          path: results
+        continue-on-error: true
+      
+      - name: Download Spatial Polars results
+        if: needs.benchmark-spatial-polars.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: spatial_polars-results-sf${{ env.SCALE_FACTOR }}
           path: results
         continue-on-error: true
       
