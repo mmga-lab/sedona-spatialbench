@@ -222,7 +222,11 @@ jobs:
       
       - name: Pre-install DuckDB spatial extension
         run: |
-          python -c "import duckdb; con = duckdb.connect(); con.execute('INSTALL spatial'); print('DuckDB spatial extension installed')"
+          if [ "${{ env.DUCKDB_NIGHTLY }}" = "true" ]; then
+            python -c "import duckdb; con = duckdb.connect(); con.execute('INSTALL spatial FROM core_nightly'); print('DuckDB spatial extension installed from core_nightly')"
+          else
+            python -c "import duckdb; con = duckdb.connect(); con.execute('INSTALL spatial'); print('DuckDB spatial extension installed')"
+          fi
       
       - name: Run DuckDB benchmark
         run: |
