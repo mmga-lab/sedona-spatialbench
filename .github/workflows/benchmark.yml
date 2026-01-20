@@ -271,7 +271,7 @@ jobs:
           else
             pip install geopandas pandas pyarrow shapely
           fi
-          echo "Installed GeoPandas version: $(python -c 'from importlib.metadata import version; print(version(\"geopandas\"))')"
+          echo "Installed GeoPandas version: $(python -c 'from importlib.metadata import version; print(version("geopandas"))')"
       
       - name: Run GeoPandas benchmark
         run: |
@@ -373,7 +373,7 @@ jobs:
           else
             pip install "spatial-polars[knn]" pyarrow
           fi
-          echo "Installed Spatial Polars version: $(python -c 'from importlib.metadata import version; print(version(\"spatial-polars\"))')"
+          echo "Installed Spatial Polars version: $(python -c 'from importlib.metadata import version; print(version("spatial-polars"))')"
       
       - name: Run Spatial Polars benchmark
         run: |
