@@ -327,7 +327,7 @@ jobs:
           else
             pip install "sedonadb[geopandas]" pandas pyarrow pyproj
           fi
-          echo "Installed SedonaDB version: $(python -c 'from importlib.metadata import version; print(version(\"sedonadb\"))')"
+          echo "Installed SedonaDB version: $(python -c 'from importlib.metadata import version; print(version("sedonadb"))')"
       
       - name: Run SedonaDB benchmark
         run: |
