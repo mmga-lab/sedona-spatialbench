@@ -317,8 +317,9 @@ jobs:
           echo "SEDONADB_VERSION: ${{ env.SEDONADB_VERSION }}"
           echo "========================================"
           if [ "${{ env.SEDONADB_NIGHTLY }}" = "true" ]; then
-            # Use Gemfury as primary index to ensure nightly version is installed
+            # Use Gemfury as primary index and --pre to install nightly alpha builds (e.g., 0.3.0a69)
             pip install "sedonadb[geopandas]" pandas pyarrow pyproj \
+              --pre \
               --index-url https://repo.fury.io/sedona-nightlies/ \
               --extra-index-url https://pypi.org/simple/
           elif [ -n "${{ env.SEDONADB_VERSION }}" ]; then
