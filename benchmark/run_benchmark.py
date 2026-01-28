@@ -344,6 +344,39 @@ class SpatialPolarsBenchmark(BaseBenchmark):
         return len(result), result
 
 
+class MilvusBenchmark(BaseBenchmark):
+    """Milvus GIS benchmark runner.
+
+    Note: Milvus only supports a subset of spatial queries.
+    Supported: Q1, Q2, Q3, Q4, Q6, Q8, Q9, Q10, Q11
+    Unsupported: Q5, Q7, Q12 (missing ST_ConvexHull, ST_MakeLine, ST_KNN)
+    """
+
+    # Queries supported by Milvus GIS
+    SUPPORTED_QUERIES = ["q1", "q2", "q3", "q4", "q6", "q8", "q9", "q10", "q11"]
+
+    def __init__(self, data_paths: dict[str, str]):
+        super().__init__(data_paths, "milvus")
+        self._queries = None
+
+    def setup(self) -> None:
+        import importlib.util
+        milvus_path = Path(__file__).parent.parent / "spatialbench-queries" / "milvus_queries.py"
+        spec = importlib.util.spec_from_file_location("milvus_queries", milvus_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self._queries = {f"q{i}": getattr(module, f"q{i}") for i in range(1, QUERY_COUNT + 1)}
+
+    def teardown(self) -> None:
+        self._queries = None
+
+    def execute_query(self, query_name: str, query: str | None) -> tuple[int, Any]:
+        if query_name not in self._queries:
+            raise ValueError(f"Query {query_name} not found")
+        result = self._queries[query_name](self.data_paths)
+        return len(result), result
+
+
 def get_sql_queries(dialect: str) -> dict[str, str]:
     """Get SQL queries for a specific dialect from print_queries.py."""
     from print_queries import DuckDBSpatialBenchBenchmark, SedonaDBSpatialBenchBenchmark
@@ -463,6 +496,11 @@ def run_benchmark(
             "class": SpatialPolarsBenchmark,
             "version_getter": lambda: pkg_version("spatial-polars"),
             "queries_getter": lambda: {f"q{i}": None for i in range(1, QUERY_COUNT + 1)},
+        },
+        "milvus": {
+            "class": MilvusBenchmark,
+            "version_getter": lambda: pkg_version("pymilvus"),
+            "queries_getter": lambda: {q: None for q in MilvusBenchmark.SUPPORTED_QUERIES},
         },
     }
 
@@ -590,12 +628,12 @@ def save_results(results: list[BenchmarkSuite], output_file: str) -> None:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Run SpatialBench benchmarks comparing SedonaDB, DuckDB, GeoPandas, and Spatial Polars"
+        description="Run SpatialBench benchmarks comparing SedonaDB, DuckDB, GeoPandas, Spatial Polars, and Milvus"
     )
     parser.add_argument("--data-dir", type=str, required=True,
                         help="Path to directory containing benchmark data (parquet files)")
     parser.add_argument("--engines", type=str, default="duckdb,geopandas,sedonadb,spatial_polars",
-                        help="Comma-separated list of engines to benchmark")
+                        help="Comma-separated list of engines to benchmark (duckdb,geopandas,sedonadb,spatial_polars,milvus)")
     parser.add_argument("--queries", type=str, default=None,
                         help="Comma-separated list of queries to run (e.g., q1,q2,q3)")
     parser.add_argument("--timeout", type=int, default=10,
@@ -610,7 +648,7 @@ def main():
     args = parser.parse_args()
 
     engines = [e.strip().lower() for e in args.engines.split(",")]
-    valid_engines = {"duckdb", "geopandas", "sedonadb", "spatial_polars"}
+    valid_engines = {"duckdb", "geopandas", "sedonadb", "spatial_polars", "milvus"}
 
     for e in engines:
         if e not in valid_engines:
